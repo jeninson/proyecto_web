@@ -1,0 +1,77 @@
+{
+    "Carros": [{
+        "Placa": "MKL-807",
+        "Numero de serie": "VWERF23425632FD",
+        "Modelo": 2018,
+        "Marca": "KIA",
+        "Kilometraje": 15781,
+        "Tipo": "SEDAN",
+        "Color": "Negro"
+    },
+    {
+        "Placa": "",
+        "Numero de serie": "",
+        "Modelo": "",
+        "Marca": "",
+        "Kilometraje": "",
+        "Tipo": "",
+        "Rin": 17,
+        "Llantas": "205/90/R17",
+        "Propietario":[{
+                "Nombre": "Juan Jimenez",
+                "Identificacion": "1212132131",
+                "Email": "juan@sena.edu.co"
+            },{
+                "Nombre": "Karina Suarez",
+                "Identificacion": "234324234",
+                "Email": "ksuarez@gmial.com"
+            }]
+    },
+    {
+        "Placa": "",
+        "Numero de serie": "",
+        "Modelo": "",
+        "Marca": "",
+        "Tipo": "",
+        "Blindaje": "2 plus"
+    },
+    {
+        "Placa": "",
+        "Numero de serie": "",
+        "Modelo": "",
+        "Marca": "",
+        "Kilometraje": "",
+        "Tipo": "",
+        "Propietarios": ["Juan Gonzalez","Ana Gutierrez","Pedro Fernandez"]
+    },
+    {
+        "Placa": "",
+        "Numero de serie": "",
+        "Modelo": "",
+        "Marca": "",
+        "Kilometraje": "",
+        "Tipo": ""
+    }],
+    "Producto":[
+        {
+            "id":1,
+            "nombre": "Pan de papa",
+            "categoria_fk": 1,
+            "usuario_fk": "admin@sena.edu.co"
+        },
+        {
+            "id":2,
+            "nombre": "Jamon de Cerdo",
+            "categoria_fk": 2,
+            "usuario_fk": "",
+            "Grasa": "40%"
+        },
+        {
+            "id":3,
+            "nombre": "Tomates",
+            "usuario_fk": "admin@sena.edu.co",
+            "Origen": "Tunja",
+            "Tipo": "Criollos"
+        }
+    ]
+}

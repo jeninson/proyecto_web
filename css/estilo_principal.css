@@ -1,0 +1,77 @@
+/*Estilos Generales*/
+* {    
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
+    /* font-family: "Poppins", cursive; */
+    font-weight: 400;
+    font-style: normal;   
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.main > * {
+    border: 1px #000 solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/*Estilo de las secciones*/
+.header {
+    grid-area: header;
+    background-color: #fff2cc;
+}
+.nav {
+    grid-area: nav;
+    background-color: #dae8fc;
+}
+.section {
+    grid-area: section;
+    background-color: #F8CECC;
+}
+.aside{
+    grid-area: aside;
+    background-color: #E1D5E7;
+}
+.footer{
+    grid-area: footer;
+    background-color: #D5E8D4;
+}
+
+/*Maquetacion con CSS GRIP*/
+
+.main {
+ display: grid;
+ gap: 10px;
+ grid-template: 
+ "header" 80px 
+ "nav" 50px
+ "section" auto
+ "aside" 100px
+ "footer" 50px;
+ background-color: aqua;
+ text-align: center;
+
+ @media (min-width: 768px){
+    grid-template: 
+    "header  header  header" 80px 
+    "nav     nav     nav" 50px
+    "section section aside" auto
+    "footer  footer  footer" 80px / auto auto 200px;
+    background-color: red;
+ }
+
+ @media (min-width: 1024px){
+    grid-template: 
+    "header  header  header   header" 80px 
+    "nav section section aside" auto
+    "footer  footer  footer footer" 80px /200px auto auto 200px;
+    background-color: black;
+ }
+}
+
+
