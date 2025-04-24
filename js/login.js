@@ -1,3 +1,4 @@
+import { url } from "./tool.js"
 
 export function validarLogin(){
     //console.log("ok")
@@ -13,14 +14,15 @@ export function validarLogin(){
     if(clave.trim() === "") msg = "La contraseña ingresada es invalida."
     
     if(msg !== ""){
-        $lb_msg.innerHTML = `<strong class='text-danger'>${msg}</strong>`
+        $lb_msg.innerHTML = `<strong class='text-danger'>${msg}</strong>`        
+        setTimeout(() => {
+            $lb_msg.innerHTML = "&nbsp;"
+        }, 3000)
+        return false
     }
 
     setTimeout(() => {
         $lb_msg.innerHTML = "&nbsp;"
+        url("principal.html")
     }, 3000)
-
-    console.log(user, clave)
 }
-
-export function mostrar(){}
