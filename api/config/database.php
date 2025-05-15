@@ -16,7 +16,7 @@ class Database {
 
         $credenciales = json_decode(file_get_contents($credencialesPath), true);
         if (!$credenciales || !isset($credenciales["host"], $credenciales["dbname"], $credenciales["user"], $credenciales["pass"])) {
-            throw new Exception("Credenciales inválidas o incompletas en el archivo: {$credencialesPath}");
+            throw new Exception("Credenciales inválidas o incompletas de lado del servidor.");
         }
 
         // Asignar las credenciales a las propiedades privadas
@@ -27,7 +27,7 @@ class Database {
         $this->conn = null;
     }
 
-    public function connect() {
+    public function conectar() {
         $this->conn = null;
         try {
             $this->conn = new PDO(
@@ -37,17 +37,17 @@ class Database {
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            throw new Exception("Connection failed: " . $e->getMessage());
+            throw new Exception("Coneccion Fallida: " . $e->getMessage());
         }
         return $this->conn;
     }
 }
 
 // Uso de la clase Database
-try {
+/*try {
     $db = new Database();
     $connection = $db->connect();
 } catch (Exception $e) {
     echo $e->getMessage();
-}
+}*/
 ?>
