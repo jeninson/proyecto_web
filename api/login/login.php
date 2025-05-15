@@ -1,6 +1,6 @@
 <?php
     //Importar requerimientos
-    include_once '../config/database.php';
+    include_once 'loginModel.php';
 
     header('Content-Type: application/json; charset=utf-8');
 
@@ -11,14 +11,8 @@
         $pass = $_GET["contrasena"] ?? null;
 
         try {
-            $conexion = new Database();
-            $conn = $conexion->conectar();
-
-            $result = $conn->prepare("SELECT `id`, `identificacion`, `nombres`, `apellidos`, `celular` FROM `tbusuarios` WHERE `correo` = :email AND `contrasena` = :clave");
-            $result->bindParam(":email", $user, PDO::PARAM_STR);
-            $result->bindParam(":clave", $pass, PDO::PARAM_STR);
-            $result->execute();
-            $row = $result->fetch(PDO::FETCH_ASSOC);
+            $auth = new LoginModel();
+            $row = $auth->autenticarUsuario($user, $pass);
             if ($row) {
                 // Si se encuentra el usuario, devolver los datos
                 http_response_code(200); // OK
@@ -42,8 +36,25 @@
         $pass = $_POST["contrasena"] ?? null;
 
         //var_dump($data);
-        http_response_code(200); // OK
-        echo json_encode(array("message" => "Metodo POST.", "usuario" => $user, "contraseña" => $pass));
+        
+        try {
+            $auth = new LoginModel();
+            $row = $auth->autenticarUsuario($user, $pass);
+            if ($row) {
+                // Si se encuentra el usuario, devolver los datos
+                http_response_code(200); // OK
+                echo json_encode(array("code"=>200,"message" => "Usuario encontrado.", "usuario" => $row));
+            } else {
+                // Si no se encuentra el usuario, devolver un mensaje de error
+                http_response_code(401); // No encontrado
+                echo json_encode(array("code"=>401,"message" => "Credenciales invalidas."));
+            }
+        } catch (Exception $e) {
+            http_response_code(500); // Error interno del servidor
+            echo json_encode(array("code"=>500,"message" => "Error de conexion a la base de datos.", "Error" => $e->getMessage()));
+            exit();
+        }
+        exit();
     } else {
         // Método no permitido
         http_response_code(405); // Método no permitido
