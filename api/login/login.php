@@ -32,10 +32,10 @@
         // Obtener los datos de la solicitud POST
         $data = json_decode(file_get_contents("php://input"), true);
         //var_dump($data);
-        $user = $_POST["usuario"] ?? null;
-        $pass = $_POST["contrasena"] ?? null;
+        $user = $data["usuario"] ?? null;
+        $pass = $data["contrasena"] ?? null;
 
-        //var_dump($data);
+        //var_dump($pass);
         
         try {
             $auth = new LoginModel();
