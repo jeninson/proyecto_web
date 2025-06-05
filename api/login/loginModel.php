@@ -38,6 +38,30 @@ class LoginModel {
         }
     }
 
+    public function validarToken($token, $userId) {
+        try {
+            $conn = $this->conexion->conectar();
+            $stmt = $conn->prepare("SELECT * FROM `tbtokens` WHERE `token` = :token AND `user_id` = :usuario_id");
+            $stmt->bindParam(":token", $token, PDO::PARAM_STR);
+            $stmt->bindParam(":usuario_id", $userId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al validar el token: " . $e->getMessage());
+        }
+    }
+
+    public function eliminarToken($token) {
+        try {
+            $conn = $this->conexion->conectar();
+            $stmt = $conn->prepare("DELETE FROM `tbtokens` WHERE `token` = :token");
+            $stmt->bindParam(":token", $token, PDO::PARAM_STR);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            throw new Exception("Error al eliminar el token: " . $e->getMessage());
+        }
+    }
+
     public function __destruct() {
         // Cerrar la conexión si es necesario
         $this->conexion = null;

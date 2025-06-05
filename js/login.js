@@ -31,10 +31,11 @@ export async function validarLogin(){
     }
 
     let resp = await enviarPeticion(info)
-    console.log(resp.usuario)
+    //console.log(resp.usuario)
     if(resp.code === 200){
         //console.log(resp.usuario)
         localStorage.setItem("idtoken", resp.idtoken)
+        localStorage.setItem("iduser", resp.usuario.id)
         localStorage.setItem("usuario", resp.usuario.nombres + " " + resp.usuario.apellidos)
         url("panel.html?idtk=" + resp.idtoken, "_self")
     }else{
@@ -44,4 +45,14 @@ export async function validarLogin(){
         }, 3000)
     }
 
+}
+
+export function validarToken(){
+    //console.log("validar token")
+    let idtk = localStorage.getItem("idtoken")
+    if(idtk === null || idtk === undefined || idtk === ""){
+        if(!location.pathname.includes("index")) url("index.html", "_self")
+    }else{
+        url("panel.html?idtk=" + idtk, "_self")
+    }
 }

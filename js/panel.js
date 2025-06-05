@@ -1,3 +1,28 @@
+import { url, enviarPeticion } from './tool.js';
+
+export async function validarUsuario() {
+    // Verificar si el usuario está autenticado
+    const idToken = localStorage.getItem('idtoken');
+    const iduser = localStorage.getItem('iduser');
+
+    if (!idToken || !iduser) url('index.html');
+    else {
+        let info = {
+            url: '../api/login/',
+            method: 'GET',
+            param: {idToken, iduser}
+        }
+        let resp = await enviarPeticion(info);  
+        //console.log(resp);
+        if (resp.code !== 200) {
+            // Si la respuesta no es exitosa, redirigir al inicio de sesión
+            url("index.html", "_self");
+            return;
+        }
+        panel()
+    }
+}
+
 export function panel() {
 
     // --- Manejo de Navegación por Secciones ---
@@ -39,7 +64,8 @@ export function panel() {
         link.addEventListener('click', function(event) {
             event.preventDefault(); // Prevenir el comportamiento de ancla por defecto
             const sectionId = this.getAttribute('data-section');
-            showSection(sectionId);
+            if(sectionId === 'salir') salida() // Llamar a la función de salida
+            else showSection(sectionId)
 
             // Opcional: Actualizar la URL sin recargar (para historial y bookmarks)
             // history.pushState(null, '', `#${sectionId}`);
@@ -92,4 +118,28 @@ export function panel() {
             }
         });
     }
+}
+
+export async function salida() {
+    
+    let info = {
+        url: '../api/login/',
+        method: 'DELETE',
+        param: {
+            idToken: localStorage.getItem('idtoken')
+        }
+    }
+    let resp = await enviarPeticion(info);
+    //console.log(resp);
+    if( resp.code !== 200) {
+        // Si la respuesta no es exitosa, mostrar un mensaje de error
+        alert('Error al cerrar sesión. Inténtalo de nuevo.');
+        return;
+    }    
+    // Eliminar el token y el usuario del almacenamiento local
+    localStorage.removeItem('idtoken');
+    localStorage.removeItem('iduser');
+    localStorage.removeItem('usuario');
+    // Redirigir al usuario a la página de inicio de sesión
+    url('index.html', '_self');
 }
