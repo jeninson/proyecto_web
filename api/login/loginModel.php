@@ -41,7 +41,7 @@ class LoginModel {
     public function validarToken($token, $userId) {
         try {
             $conn = $this->conexion->conectar();
-            $stmt = $conn->prepare("SELECT * FROM `tbtokens` WHERE `token` = :token AND `user_id` = :usuario_id");
+            $stmt = $conn->prepare("SELECT * FROM `tbtokens` WHERE `token` = :token AND `user_id` = :usuario_id AND `id_estado` = 1");
             $stmt->bindParam(":token", $token, PDO::PARAM_STR);
             $stmt->bindParam(":usuario_id", $userId, PDO::PARAM_INT);
             $stmt->execute();
@@ -54,7 +54,7 @@ class LoginModel {
     public function eliminarToken($token) {
         try {
             $conn = $this->conexion->conectar();
-            $stmt = $conn->prepare("DELETE FROM `tbtokens` WHERE `token` = :token");
+            $stmt = $conn->prepare("UPDATE `tbtokens` SET `id_estado` = 0 WHERE `token` = :token");
             $stmt->bindParam(":token", $token, PDO::PARAM_STR);
             return $stmt->execute();
         } catch (Exception $e) {

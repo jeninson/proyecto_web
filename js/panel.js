@@ -16,7 +16,7 @@ export async function validarUsuario() {
         //console.log(resp);
         if (resp.code !== 200) {
             // Si la respuesta no es exitosa, redirigir al inicio de sesión
-            url("index.html", "_self");
+            salida();
             return;
         }
         panel()
@@ -140,6 +140,7 @@ export async function salida() {
     localStorage.removeItem('idtoken');
     localStorage.removeItem('iduser');
     localStorage.removeItem('usuario');
+    localStorage.clear();
     // Redirigir al usuario a la página de inicio de sesión
     url('index.html', '_self');
 }
