@@ -2,7 +2,8 @@
     //Importar requerimientos
     include_once 'loginModel.php';
 
-    header('Content-Type: application/json; charset=utf-8');
+    header('Content-Type: application/json; charset=UTF-8');
+    header('Access-Control-Allow-Origin: *');
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Obtener los datos de la solicitud GET
@@ -41,9 +42,11 @@
             $auth = new LoginModel();
             $row = $auth->autenticarUsuario($user, $pass);
             if ($row) {
+                // Si se encuentra el usuario, generar un token
+                $idToken = $auth->generarToken($row['id'], $user);
                 // Si se encuentra el usuario, devolver los datos
                 http_response_code(200); // OK
-                echo json_encode(array("code"=>200,"message" => "Usuario encontrado.", "usuario" => $row));
+                echo json_encode(array("code"=>200,"message" => "Usuario encontrado.", "usuario" => $row, "idtoken" => $idToken));
             } else {
                 // Si no se encuentra el usuario, devolver un mensaje de error
                 http_response_code(401); // No encontrado

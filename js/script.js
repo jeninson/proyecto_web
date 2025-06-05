@@ -3,8 +3,7 @@ import { validarLogin } from "./login.js"
 import { panel } from "./panel.js"
 
 document.addEventListener("DOMContentLoaded", (e)=>{
-    inicio()
-    panel()
+    //panel()
 })
 
 document.addEventListener("click", (e)=>{
@@ -17,8 +16,5 @@ document.addEventListener("submit", (e)=>{
     e.preventDefault()
     if(e.target.matches("#loginForm")) validarLogin()
 })
-
-function inicio(){ console.log("Inicio de la Pagina")}
-
 
 

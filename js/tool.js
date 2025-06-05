@@ -6,11 +6,11 @@ export function url(url,open = undefined){
 export async function enviarPeticion(info){
     let {url, method, param} = info, data = {}
 
-    if(param === undefined && method === "GET") url += "?" + new URLSearchParams(param).toString()
+    if(param != undefined && method === "GET") url += "?" + new URLSearchParams(param).toString()
     
     if(method === "POST" || method === "PUT" || method === "DELETE") 
-        data = {method: method, headers: {"Content-Type": "application/json"}, body: JSON.stringify(param)}
-    else data = {method: method,headers: {"Content-Type": "application/json"}}
+        data = {method, headers: {"Content-Type": "application/json"}, body: JSON.stringify(param)}
+    else data = {method, headers: {"Content-Type": "application/json"}}
     
     try{
         let resp = await fetch(url, data)

@@ -20,6 +20,28 @@ class LoginModel {
             throw new Exception("Error de conexion a la base de datos: " . $e->getMessage());
         }
     }
+
+    public function generarToken($userId, $user) {
+        // Generar un token único para el usuario
+        $token = bin2hex(random_bytes(16)); // Genera un token aleatorio de 32 caracteres
+        //var_dump($userId, $user, $token);
+        try {
+            $conn = $this->conexion->conectar();
+            $stmt = $conn->prepare("INSERT INTO `tbtokens`(`user_id`, `token`, `user_name`, `fecha_creacion`, `id_estado`) VALUES (:usuario_id, :token, :user, CURRENT_TIMESTAMP(), 1)");
+            $stmt->bindParam(":usuario_id", $userId, PDO::PARAM_INT);
+            $stmt->bindParam(":token", $token, PDO::PARAM_STR);
+            $stmt->bindParam(":user", $user, PDO::PARAM_STR);
+            $stmt->execute();
+            return $token;
+        } catch (Exception $e) {
+            throw new Exception("Error al generar el token: " . $e->getMessage());
+        }
+    }
+
+    public function __destruct() {
+        // Cerrar la conexión si es necesario
+        $this->conexion = null;
+    }
 }
 
 ?>
