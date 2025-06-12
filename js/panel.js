@@ -1,4 +1,5 @@
 import { url, enviarPeticion } from './tool.js';
+import { cargarUsuario } from './usuario.js';
 
 export async function validarUsuario() {
     // Verificar si el usuario está autenticado
@@ -16,7 +17,7 @@ export async function validarUsuario() {
         //console.log(resp);
         if (resp.code !== 200) {
             // Si la respuesta no es exitosa, redirigir al inicio de sesión
-            salida();
+            salida()
             return;
         }
         panel()
@@ -39,7 +40,8 @@ export function panel() {
         // Mostrar la sección solicitada
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
-            targetSection.classList.add('active');
+            targetSection.classList.add('active');            
+            if (sectionId === 'usuarios') cargarUsuario(""); // Cargar datos del usuario si es necesario
         } else {
             // Si no se encuentra, mostrar la de inicio por defecto
             document.getElementById('inicio').classList.add('active');
@@ -77,7 +79,7 @@ export function panel() {
     // const initialSection = window.location.hash.substring(1) || 'inicio';
     showSection('inicio'); // Muestra 'inicio' por defecto
 
-
+    /*
     // --- Manejo del Formulario de Pago ---
     const paymentForm = document.getElementById('payment-form');
     const paymentResultDiv = document.getElementById('payment-result');
@@ -117,7 +119,7 @@ export function panel() {
                 paymentResultDiv.classList.add('alert', 'alert-danger');
             }
         });
-    }
+    }*/
 }
 
 export async function salida() {

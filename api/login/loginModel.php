@@ -11,7 +11,8 @@ class LoginModel {
     public function autenticarUsuario($user, $pass) {
         try {
             $conn = $this->conexion->conectar();
-            $result = $conn->prepare("SELECT `id`, `identificacion`, `nombres`, `apellidos`, `celular` FROM `tbusuarios` WHERE `correo` = :email AND `contrasena` = MD5(:clave)");
+            $result = $conn->prepare("CALL `validarUsuario`( :email, :clave)");
+            //$result = $conn->prepare("SELECT `id`, `identificacion`, `nombres`, `apellidos`, `celular` FROM `tbusuarios` WHERE `correo` = :email AND `contrasena` = MD5(:clave)");
             $result->bindParam(":email", $user, PDO::PARAM_STR);
             $result->bindParam(":clave", $pass, PDO::PARAM_STR);
             $result->execute();
@@ -27,7 +28,8 @@ class LoginModel {
         //var_dump($userId, $user, $token);
         try {
             $conn = $this->conexion->conectar();
-            $stmt = $conn->prepare("INSERT INTO `tbtokens`(`user_id`, `token`, `user_name`, `fecha_creacion`, `id_estado`) VALUES (:usuario_id, :token, :user, CURRENT_TIMESTAMP(), 1)");
+            $stmt = $conn->prepare("CALL addtoken(:usuario_id, :token, :user)");
+            //$stmt = $conn->prepare("INSERT INTO `tbtokens`(`user_id`, `token`, `user_name`, `fecha_creacion`, `id_estado`) VALUES (:usuario_id, :token, :user, CURRENT_TIMESTAMP(), 1)");
             $stmt->bindParam(":usuario_id", $userId, PDO::PARAM_INT);
             $stmt->bindParam(":token", $token, PDO::PARAM_STR);
             $stmt->bindParam(":user", $user, PDO::PARAM_STR);
