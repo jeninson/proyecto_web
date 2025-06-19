@@ -41,7 +41,7 @@ export function panel() {
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.add('active');            
-            if (sectionId === 'usuarios') cargarUsuario(""); // Cargar datos del usuario si es necesario
+            if (sectionId === 'usuarios') cargarUsuario(); // Cargar datos del usuario si es necesario
         } else {
             // Si no se encuentra, mostrar la de inicio por defecto
             document.getElementById('inicio').classList.add('active');
