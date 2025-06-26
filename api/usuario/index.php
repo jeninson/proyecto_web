@@ -26,6 +26,30 @@
             exit();
         }
         exit();
+    }  elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') {   
+        // Obtener los datos de la solicitud POST
+        $data = json_decode(file_get_contents("php://input"), true);
+        //var_dump($data);
+        $id = $data["id"] ?? null;
+
+        //var_dump($pass);
+        
+        try {
+            $usuarios = new usuarioModel();
+            $row = $usuarios->eliminarUsuario($id);
+            if ($row) {
+                http_response_code(200); // OK
+                echo json_encode(array("code"=>200,"message" => "Usuario Eliminado."));
+            } else {
+                http_response_code(401); // No encontrado
+                echo json_encode(array("code"=>401,"message" => "Usuario invalidos."));
+            }
+        } catch (Exception $e) {
+            http_response_code(500); // Error interno del servidor
+            echo json_encode(array("code"=>500,"message" => "Error de conexion a la base de datos.", "Error" => $e->getMessage()));
+            exit();
+        }
+        exit();
     } else {
         // Método no permitido
         http_response_code(405); // Método no permitido

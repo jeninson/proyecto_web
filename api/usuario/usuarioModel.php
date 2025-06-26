@@ -9,7 +9,7 @@
         }
 
         public function consultarUsuario($id) {
-            $query = "SELECT * FROM tbusuarios";
+            $query = "SELECT `id`, `identificacion`, `nombres`, `apellidos`, `celular`, `correo`, `direccion` FROM tbusuarios";
             if (!empty($id)) {
                 $query .= " WHERE id = :id";
             }
@@ -21,6 +21,14 @@
             }
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        function eliminarUsuario($id) {
+            $query = "DELETE FROM tbusuarios WHERE `id` = :id";
+            $conn = $this->db->conectar();
+            $result = $conn->prepare($query);
+            $result->bindParam(":id", $id, PDO::PARAM_INT);
+            return $result->execute();
         }
 }
 ?>
