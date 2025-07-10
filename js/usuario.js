@@ -68,6 +68,12 @@ export async function mostrarModalEliminarUsuario(id, idModal) {
 }
 
 export async function eliminarUsuario(id) {
+    
+    const $modal = document.querySelector('#ModalEliminarUsuario');
+    const modalBootstrap = bootstrap.Modal.getInstance($modal) || new bootstrap.Modal($modal);
+    //let result = confirm("Estas seguro de eliminar el usuario?");
+    //console.log(result);
+    
     let info = {
         url: '../api/usuario/',
         method: 'DELETE',
@@ -77,9 +83,7 @@ export async function eliminarUsuario(id) {
     if (resp.code === 200) {
         //console.log(resp.data);
         cargarUsuario();
-        document.querySelector('#ModalEliminarUsuario').classList.remove('show');
-        document.querySelector('#ModalEliminarUsuario').style.display = 'none';
-        document.querySelector('#ModalEliminarUsuario .modal-backdrop').remove();
+        modalBootstrap.hide();
     } else {
         alert(resp.message);
     }
