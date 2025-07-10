@@ -150,21 +150,70 @@
 
     <!-- Modal -->
     <div class="modal fade" id="ModalEliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">!!! ATENCIÓN  -  ELIMINACIÓN !!!</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>-->
-            <button type="button" class="btn btn-danger">Eliminar</button>
-        </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">!!! ATENCIÓN  -  ELIMINACIÓN !!!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>-->
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Modal Agregar Usuario -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-bg-success">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">!!! AGREGAR UN NUEVO USUARIO !!!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post" id="formulario_usuario" name="formulario_usuario">
+                        <input type="hidden" name="id_usuario" id="id_usuario" value="">
+                        <div class="mb-3">
+                            <label for="identificacion" class="form-label">Identificación</label>
+                            <input type="number" class="form-control" name="identificacion" id="identificacion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" name="nombres" id="nombres" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" name="apellidos" id="apellidos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" name="correo" id="correo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input type="number" class="form-control" name="celular" id="celular" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" name="direccion" id="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contrasena" class="form-label">Contrasena</label>
+                            <input type="password" class="form-control" name="contrasena" id="contrasena" autocomplete="" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="container mt-5 py-3 text-center text-muted border-top">

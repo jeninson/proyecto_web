@@ -30,5 +30,20 @@
             $result->bindParam(":id", $id, PDO::PARAM_INT);
             return $result->execute();
         }
+
+        function agregarUsuario($ident, $nombres, $apellidos, $correo, $celular, $pass, $direccion) {
+            $query = "INSERT INTO tbusuarios (identificacion, nombres, apellidos, correo, celular, contrasena, direccion) 
+                      VALUES (:identificacion, :nombres, :apellidos, :correo, :celular, MD5(:contrasena), :direccion)";
+            $conn = $this->db->conectar();
+            $result = $conn->prepare($query);
+            $result->bindParam(":identificacion", $ident);
+            $result->bindParam(":nombres", $nombres);
+            $result->bindParam(":apellidos", $apellidos);
+            $result->bindParam(":correo", $correo);
+            $result->bindParam(":celular", $celular);
+            $result->bindParam(":contrasena", $pass);
+            $result->bindParam(":direccion", $direccion);
+            return $result->execute();
+        }
 }
 ?>

@@ -88,3 +88,32 @@ export async function eliminarUsuario(id) {
         alert(resp.message);
     }
 }
+
+export async function guardarUsuario() {
+    
+    const formulario = document.getElementById('formulario_usuario');
+    const formData = new FormData(formulario);
+    let param = {}
+    for (let [key, value] of formData.entries()) {
+        param[`${key}`] = `${value}`;
+    }
+
+    let info = {
+            url: '../api/usuario/',
+            method: 'POST',
+            param
+    }
+    //console.log(info, formData);
+    
+    let resp = await enviarPeticion(info);
+    if (resp.code === 200) {
+        //console.log(resp.data);
+        cargarUsuario();
+        formulario.reset();
+        const $modal = document.querySelector('#addUserModal');
+        const modalBootstrap = bootstrap.Modal.getInstance($modal) || new bootstrap.Modal($modal);
+        modalBootstrap.hide();
+    } else {
+        alert(resp.message);
+    }/**/
+}
