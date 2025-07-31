@@ -27,7 +27,7 @@ export async function cargarUsuario(id="") {
                     <td>${usuario.correo}</td>
                     <td>(ID=${usuario.id}) ${usuario.direccion}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary btn_update_user" data-iduser="${usuario.id}" data-bs-toggle="modal" data-bs-target="#ModalEditarUsuario">Editar</button>
+                        <button class="btn btn-sm btn-primary btn_update_user" data-iduser="${usuario.id}" data-bs-toggle="modal" data-bs-target="#addUserModal">Editar</button>
                         <button class="btn btn-sm btn-danger btn_delete_user" data-iduser="${usuario.id}" data-bs-toggle="modal" data-bs-target="#ModalEliminarUsuario">Eliminar</button>
                     </td>
                 </tr>`;
@@ -100,10 +100,10 @@ export async function guardarUsuario() {
 
     let info = {
             url: '../api/usuario/',
-            method: 'POST',
+            method: param.id_usuario ? 'PUT' : 'POST',
             param
     }
-    //console.log(info, formData);
+    console.log(info, formData);
     
     let resp = await enviarPeticion(info);
     if (resp.code === 200) {
@@ -116,4 +116,51 @@ export async function guardarUsuario() {
     } else {
         alert(resp.message);
     }/**/
+}
+
+export function reiniciarFormulario() {
+    const $modal = document.querySelector('#addUserModal');
+    document.querySelector(idModal + ' #exampleModalLabel').innerHTML = "!!! AGREGAR UN NUEVO USUARIO !!!";
+    $modal.querySelector('.modal-header').classList.remove('text-bg-primary');
+    $modal.querySelector('.modal-header').classList.add('text-bg-success');
+    const formulario = document.getElementById('formulario_usuario');
+    formulario.querySelector('#id_usuario').value = "";
+    
+    formulario.reset();     
+}
+
+export async function mostrarModalActualizarUsuario(id, idModal) {
+    let bodyModal = document.querySelector(idModal + ' .modal-body');
+    const id_usuario = document.querySelector(idModal + ' #id_usuario');
+    const identificacion = document.querySelector(idModal + ' #identificacion');
+    const nombres = document.querySelector(idModal + ' #nombres');
+    const apellidos = document.querySelector(idModal + ' #apellidos');
+    const celular = document.querySelector(idModal + ' #celular');
+    const correo = document.querySelector(idModal + ' #correo');
+    const direccion = document.querySelector(idModal + ' #direccion');
+    const pass = document.querySelector(idModal + ' #contrasena');
+    document.querySelector(idModal + ' #exampleModalLabel').innerHTML = "!!! ACTUALIZAR USUARIO !!!";
+    document.querySelector(idModal + ' .modal-header').classList.remove('text-bg-success');
+    document.querySelector(idModal + ' .modal-header').classList.add('text-bg-primary');
+
+    let info = {
+        url: '../api/usuario/',
+        method: 'GET',
+        param: { id }
+    }
+    let resp = await enviarPeticion(info);
+    if (resp.code === 200) {
+        //console.log(resp.data);
+        id_usuario.value = resp.data[0].id;
+        identificacion.value = resp.data[0].identificacion;
+        nombres.value = resp.data[0].nombres;
+        apellidos.value = resp.data[0].apellidos;
+        celular.value = resp.data[0].celular;
+        correo.value = resp.data[0].correo;
+        direccion.value = resp.data[0].direccion;
+        pass.value = resp.data[0].id;
+    }else {
+        bodyModal.innerHTML = `<h3 class='text-danger'>${resp.message}</h3>`;
+        return;
+    }   
 }

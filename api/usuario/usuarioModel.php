@@ -45,5 +45,20 @@
             $result->bindParam(":direccion", $direccion);
             return $result->execute();
         }
+
+        function actualizarUsuario($id, $ident, $nombres, $apellidos, $correo, $celular, $pass, $direccion) {
+            $query = "UPDATE tbusuarios SET identificacion = :identificacion, nombres = :nombres, apellidos = :apellidos, 
+                      correo = :correo, celular = :celular, direccion = :direccion WHERE id = :id";
+            $conn = $this->db->conectar();
+            $result = $conn->prepare($query);
+            $result->bindParam(":id", $id, PDO::PARAM_INT);
+            $result->bindParam(":identificacion", $ident);
+            $result->bindParam(":nombres", $nombres);
+            $result->bindParam(":apellidos", $apellidos);
+            $result->bindParam(":correo", $correo);
+            $result->bindParam(":celular", $celular);
+            $result->bindParam(":direccion", $direccion);
+            return $result->execute();
+        }
 }
 ?>

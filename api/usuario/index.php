@@ -54,7 +54,6 @@
         // Obtener los datos de la solicitud POST
         $data = json_decode(file_get_contents("php://input"), true);
         //var_dump($data);
-        $id = $data["id_usuario"] ?? null;
         $ident = $data["identificacion"] ?? null;
         $nombres = $data["nombres"] ?? null;
         $apellidos = $data["apellidos"] ?? null;
@@ -71,6 +70,36 @@
             if ($row) {
                 http_response_code(200); // OK
                 echo json_encode(array("code"=>200,"message" => "Usuario agregado correctamente."));
+            } else {
+                http_response_code(401); // No encontrado
+                echo json_encode(array("code"=>401,"message" => "Datos invalidos."));
+            }
+        } catch (Exception $e) {
+            http_response_code(500); // Error interno del servidor
+            echo json_encode(array("code"=>500,"message" => "Error de conexion a la base de datos.", "Error" => $e->getMessage()));
+            exit();
+        }
+        exit();
+    } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        $data = json_decode(file_get_contents("php://input"), true);
+        //var_dump($data);
+        $id = $data["id_usuario"] ?? null;
+        $ident = $data["identificacion"] ?? null;
+        $nombres = $data["nombres"] ?? null;
+        $apellidos = $data["apellidos"] ?? null;
+        $correo = $data["correo"] ?? null;
+        $celular = $data["celular"] ?? null;
+        $pass = $data["contrasena"] ?? null;
+        $direccion = $data["direccion"] ?? null;
+
+        //var_dump($data);
+        
+        try {
+            $usuarios = new usuarioModel();
+            $row = $usuarios->actualizarUsuario($id, $ident, $nombres, $apellidos, $correo, $celular, $pass, $direccion, $id);
+            if ($row) {
+                http_response_code(200); // OK
+                echo json_encode(array("code"=>200,"message" => "Usuario actualizado correctamente."));
             } else {
                 http_response_code(401); // No encontrado
                 echo json_encode(array("code"=>401,"message" => "Datos invalidos."));
